@@ -1,12 +1,12 @@
 import logging
 import time
 
-from selenium.common import WebDriverException
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from elements.base_element import BaseElement
+# from elements_dir.base_element import BaseElement
 from logger_dir.logger import Logger
 
 class Browser:
@@ -103,7 +103,7 @@ class Browser:
         Logger.info(f"{self}: send '{text}' to alert")
         return self.switch_to_alert().send_keys(text)
 
-    def switch_to_frame(self, frame: BaseElement):
+    def switch_to_frame(self, frame):
         Logger.info(f"{self}: switch to frame")
         return self.driver.switch_to.frame(frame.wait_for_presence())
 

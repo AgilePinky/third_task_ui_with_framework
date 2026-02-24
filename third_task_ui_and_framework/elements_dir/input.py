@@ -1,7 +1,7 @@
 from selenium.common import WebDriverException
 
 from logger_dir.logger import Logger
-from base_element import BaseElement
+from elements_dir.base_element import BaseElement
 
 
 class Input(BaseElement):

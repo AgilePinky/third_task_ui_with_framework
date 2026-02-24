@@ -1,4 +1,4 @@
-from base_element import BaseElement
+from elements_dir.base_element import BaseElement
 
 class Button(BaseElement):
     pass

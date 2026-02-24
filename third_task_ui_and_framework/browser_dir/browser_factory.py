@@ -17,6 +17,7 @@ class BrowserFactory:
             if options is None:
                 options = []
 
+            print()
             Logger.info(f"Start webdriver '{driver_name}' with options '{options}'")
             if driver_name == AvailableDriverName.CHROME:
                 chrome_options = webdriver.ChromeOptions()
