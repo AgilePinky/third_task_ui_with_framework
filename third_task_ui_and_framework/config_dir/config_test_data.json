@@ -1,12 +1,17 @@
 {
+  "test_alert": "https://the-internet.herokuapp.com/javascript_alerts",
   "username_basic_authorization": "admin",
   "password_basic_authorization": "admin",
   "url_basic_authorization": "the-internet.herokuapp.com/basic_auth",
+  "test_alert_js_url": "https://the-internet.herokuapp.com/javascript_alerts",
   "expected_js_alert_text": "I am a JS Alert",
   "expected_js_alert_result_text": "You successfully clicked an alert",
   "expected_js_confirm_text": "I am a JS Confirm",
   "expected_js_confirm_result_text": "You clicked: Ok",
   "expected_js_prompt_text": "I am a JS prompt",
   "expected_js_prompt_result_text": "You entered: ",
-  "expected_basic_authorization_alert": "Congratulations! You must have the proper credentials."
+  "expected_basic_authorization_alert": "Congratulations! You must have the proper credentials.",
+  "test_alert_context_click_url": "https://the-internet.herokuapp.com/context_menu",
+  "expected_alert_context_click_text": "You selected a context menu",
+  "url_actions": "https://the-internet.herokuapp.com/horizontal_slider"
 }

@@ -5,6 +5,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
 # from elements_dir.base_element import BaseElement
 from logger_dir.logger import Logger
@@ -106,6 +107,11 @@ class Browser:
     def switch_to_frame(self, frame):
         Logger.info(f"{self}: switch to frame")
         return self.driver.switch_to.frame(frame.wait_for_presence())
+
+    def right_click(self, element):
+        Logger.info(f"{self}: right click at {element}")
+        ActionChains(self._driver).context_click(element).perform()
+
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}[{self._driver.session_id}]"

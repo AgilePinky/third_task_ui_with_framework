@@ -25,7 +25,8 @@ class Logger:
 
     @staticmethod
     def info(message: str) -> None:
-        Logger.__logger.info(msg=message)
+        self_message = message.encode('utf-8', errors='ignore').decode('utf-8')
+        Logger.__logger.info(msg=self_message)
 
     @staticmethod
     def debug(message: str) -> None:

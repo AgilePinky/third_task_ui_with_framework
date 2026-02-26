@@ -15,6 +15,9 @@ class ConfigReader:
         with open(config_file) as f:
             self.config = json.load(f)
 
+    def get_test_alert(self):
+        return self.config["test_alert"]
+
     def get_username_basic_authorization(self):
         return self.config["username_basic_authorization"]
 
@@ -26,6 +29,9 @@ class ConfigReader:
 
     def get_expected_basic_authorization_alert(self):
         return self.config["expected_basic_authorization_alert"]
+
+    def get_test_alert_js_url(self):
+        return self.config["test_alert_js_url"]
 
     def get_expected_js_alert_result_text(self):
         return self.config["expected_js_alert_result_text"]
@@ -44,4 +50,13 @@ class ConfigReader:
 
     def get_expected_js_prompt_text(self):
         return self.config["expected_js_prompt_text"]
+
+    def get_test_alert_context_click_url(self):
+        return self.config["test_alert_context_click_url"]
+
+    def get_expected_alert_context_click_text(self):
+        return self.config["expected_alert_context_click_text"]
+
+    def get_url_actions(self):
+        return  self.config["url_actions"]
 
