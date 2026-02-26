@@ -149,8 +149,9 @@ def test_actions(browser):
     # 2
     fake = Faker()
     random_position = fake.random_int(min=0, max=5) * 0.5
-    actions_page.move_slider_with_arrows(random_position)
+    slider_value = float(actions_page.move_slider_with_arrows(random_position))
 
+    assert random_position == slider_value
 
 
 

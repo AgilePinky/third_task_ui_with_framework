@@ -36,3 +36,4 @@ class ActionsPage(BasePage):
             .perform()
 
         Logger.info(f"{self}: set slider value {self.horizontal_slider.get_attribute('value')}")
+        return self.horizontal_slider.get_attribute('value')
