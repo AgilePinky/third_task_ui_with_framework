@@ -7,7 +7,7 @@ from pages_dir.base_page import BasePage
 
 class ContextMenuAlertPage(BasePage):
     UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
-    BOX_TO_RIGHT_CLICK = (By.ID, "hot-spot")
+    BOX_TO_RIGHT_CLICK_LOC = (By.ID, "hot-spot")
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -15,5 +15,5 @@ class ContextMenuAlertPage(BasePage):
         self.name = "Context Menu page"
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
-        self.box_to_right_click = Button(browser, self.BOX_TO_RIGHT_CLICK, "Right Click Box")
+        self.box_to_right_click = Button(browser, self.BOX_TO_RIGHT_CLICK_LOC, "Right Click Box")
 

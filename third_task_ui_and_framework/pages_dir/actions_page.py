@@ -9,13 +9,13 @@ from elements_dir.input import Input
 
 class ActionsPage(BasePage):
     UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
-    HORIZONTAL_SLIDER = (By.XPATH, "//input[contains(@type,'range')]")
+    HORIZONTAL_SLIDER_LOC = (By.XPATH, "//input[contains(@type,'range')]")
 
     def __init__(self, browser):
         super().__init__(browser)
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
-        self.horizontal_slider = Input(browser, self.HORIZONTAL_SLIDER, "Horizontal slider")
+        self.horizontal_slider = Input(browser, self.HORIZONTAL_SLIDER_LOC, "Horizontal slider")
 
     def move_slider_with_arrows(self, target_value: float):
         slider = self.horizontal_slider.wait_for_clickable()

@@ -8,24 +8,31 @@ from pages_dir.login_page import LoginPage
 from pages_dir.alert_page import AlertPage
 from pages_dir.context_menu_alert_page import ContextMenuAlertPage
 from pages_dir.actions_page import ActionsPage
+from pages_dir.hovers_page import HoverPage
+from pages_dir.profile_page import ProfilePage
+from pages_dir.handlers_main_page import HandlersMainPage
+from pages_dir.handlers_new_page import HandlersNewPage
+from pages_dir.iframes_page import IframePage
 
 
+# 1
 def test_basic_authorization(browser):
     # 1
     print()
     config = ConfigReader()
-    username = config.get_username_basic_authorization()
-    password = config.get_password_basic_authorization()
-    url = config.get_url_basic_authorization()
+    username = config.get_basic_authorization_username()
+    password = config.get_basic_authorization_password()
+    url = config.get_basic_authorization_url()
     auth_url = f"https://{username}:{password}@{url}"
     browser.get(auth_url)
 
     # 2
     login_page = LoginPage(browser)
     login_page.wait_for_open()
-    assert login_page.unique_element.get_text() == config.get_expected_basic_authorization_alert
+    assert login_page.unique_element.get_text() == config.get_basic_authorization_alert_expected
 
 
+# 2
 def test_alert(browser):
     # 1
     config = ConfigReader()
@@ -37,29 +44,29 @@ def test_alert(browser):
     # 2
     alert_page.js_alert_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_alert_text()
+    assert browser.get_alert_text() == config.get_alert_expected_text()
     browser.accept_alert()
 
     # 3
-    expected_text = config.get_expected_js_alert_result_text()
+    expected_text = config.get_alert_result_expected_text()
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
     # 4
     alert_page.js_confirm_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_confirm_text()
+    assert browser.get_alert_text() == config.get_confirm_expected_text()
     browser.accept_alert()
 
     # 5
-    expected_text = config.get_expected_js_confirm_result_text()
+    expected_text = config.get_confirm_result_expected_text()
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
     # 6
     alert_page.js_prompt_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_prompt_text()
+    assert browser.get_alert_text() == config.get_prompt_expected_text()
 
     # 7
     fake = Faker()
@@ -67,15 +74,17 @@ def test_alert(browser):
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
-    expected_text = config.get_expected_js_prompt_result_text() + random_text
+    expected_text = config.get_prompt_result_expected_text() + random_text
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
+
+# 3
 def test_alert_js(browser):
     # 1
     print()
     config = ConfigReader()
-    browser.get(config.get_test_alert_js_url())
+    browser.get(config.get_test_alert_url())
 
     alert_page = AlertPage(browser)
     alert_page.wait_for_open()
@@ -83,29 +92,29 @@ def test_alert_js(browser):
     # 2
     alert_page.js_alert_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_alert_text()
+    assert browser.get_alert_text() == config.get_alert_expected_text()
     browser.accept_alert()
 
     # 3
-    expected_text = config.get_expected_js_alert_result_text()
+    expected_text = config.get_alert_result_expected_text()
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
     # 4
     alert_page.js_confirm_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_confirm_text()
+    assert browser.get_alert_text() == config.get_confirm_expected_text()
     browser.accept_alert()
 
     # 5
-    expected_text = config.get_expected_js_confirm_result_text()
+    expected_text = config.get_confirm_result_expected_text()
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
     # 6
     alert_page.js_prompt_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_expected_js_prompt_text()
+    assert browser.get_alert_text() == config.get_prompt_expected_text()
 
     # 7
     fake = Faker()
@@ -113,10 +122,12 @@ def test_alert_js(browser):
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
-    expected_text = config.get_expected_js_prompt_result_text() + random_text
+    expected_text = config.get_prompt_result_expected_text() + random_text
     actual_text = alert_page.result_after_alert.get_text()
     assert actual_text == expected_text
 
+
+# 4
 def test_alert_context_click(browser):
     # 1
     print()
@@ -131,18 +142,20 @@ def test_alert_context_click(browser):
     browser.wait_alert_present()
     browser.get_alert_text()
 
-    expected_text = config.get_expected_alert_context_click_text()
+    expected_text = config.get_alert_context_click_expected_text()
     actual_text = browser.get_alert_text()
     assert actual_text == expected_text
 
     # 3
     browser.accept_alert()
 
+
+# 5
 def test_actions(browser):
     # 1
     print()
     config = ConfigReader()
-    browser.get(config.get_url_actions())
+    browser.get(config.get_actions_url())
     actions_page = ActionsPage(browser)
     actions_page.wait_for_open()
 
@@ -152,6 +165,142 @@ def test_actions(browser):
     slider_value = float(actions_page.move_slider_with_arrows(random_position))
 
     assert random_position == slider_value
+
+
+# 6
+@pytest.mark.parametrize("profile_num, expected_profile_name",
+                         [('1', 'name: user1'),
+                          ('2', 'name: user2'),
+                          ('3', 'name: user3')])
+def test_hovers(browser, profile_num, expected_profile_name):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_hovers_url())
+    hover_page = HoverPage(browser)
+    hover_page.wait_for_open()
+
+    # 2
+    hover_page.hover_element(profile_num)
+
+
+    profile_name = hover_page.profile_name_element.get_text()
+    assert expected_profile_name == profile_name
+
+    # 3
+    hover_page.profile_url_element.click()
+    current_url = browser.driver.current_url
+
+    profile_page = ProfilePage(browser)
+    profile_page.wait_for_open()
+    assert current_url == config.get_profile_url().format(profile_num)
+
+    # 4
+    browser.driver.back()
+    hover_page.wait_for_open()
+    current_url = browser.driver.current_url
+
+    assert current_url == config.get_hovers_url()
+
+# 7
+def test_handlers(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_handlers_main_page_url())
+    handlers_main_page = HandlersMainPage(browser)
+    handlers_main_page.wait_for_open()
+
+    # 2
+    handlers_main_page.new_tab_maker.click()
+
+    # Another way to solve it
+    # all_tabs = browser.driver.window_handles
+    # browser.switch_to_window(all_tabs[1])
+    browser.switch_to_window(config.get_handlers_new_page_header())
+    handlers_new_page_first = HandlersNewPage(browser)
+    handlers_new_page_first.wait_for_open()
+
+    assert handlers_new_page_first.unique_element.get_text() == config.get_handlers_new_page_header()
+    assert browser.get_title(browser) == config.get_handlers_new_page_header()
+
+    # 3
+    # browser.driver.switch_to.window(all_tabs[0])
+    browser.switch_to_default_window()
+
+    assert handlers_main_page.unique_element.get_text() == config.get_handlers_main_page_header()
+
+    # 4
+    handlers_main_page.new_tab_maker.click()
+
+    # all_tabs = browser.driver.window_handles
+    # browser.driver.switch_to.window(all_tabs[2])
+    browser.switch_to_window(config.get_handlers_new_page_header())
+    handlers_new_page_second = HandlersNewPage(browser)
+    handlers_new_page_second.wait_for_open()
+
+    assert handlers_new_page_second.unique_element.get_text() == config.get_handlers_new_page_header()
+    assert browser.get_title(browser) == config.get_handlers_new_page_header()
+
+    # 5
+    # browser.driver.switch_to.window(all_tabs[0])
+    browser.switch_to_default_window()
+
+    assert handlers_main_page.unique_element.get_text() == config.get_handlers_main_page_header()
+
+    # 6
+    browser.switch_to_window(config.get_handlers_new_page_header())
+    browser.close()
+
+    # 7
+    browser.switch_to_window(config.get_handlers_new_page_header())
+    browser.close()
+
+# 8
+def test_iframe(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_iframe_page_url())
+    iframe_page = IframePage(browser)
+    iframe_page.wait_for_open()
+
+    # 2
+    # default condition is opened, make double click
+    iframe_page.alerts_frame_windows_button.click()
+    iframe_page.alerts_frame_windows_button.click()
+    iframe_page.nested_frames_button.click()
+
+    browser.switch_to_frame(iframe_page.nested_frames_parent_frame_element)
+    assert (iframe_page.nested_frames_parent_frame_text.get_text() ==
+            config.get_iframes_nested_frames_parent_frame_text())
+
+    browser.switch_to_frame(iframe_page.nested_frames_child_frame_element)
+    assert (iframe_page.nested_frames_child_frame_text.get_text() ==
+            config.get_iframes_nested_frames_child_frame_text())
+    browser.switch_to_default_frame()
+
+    # 3
+    iframe_page.frames_button.click()
+    browser.switch_to_frame(iframe_page.frames_first_frame_element)
+    first_frame_text = iframe_page.frames_frame_text.get_text()
+    browser.switch_to_parent_frame()
+
+    browser.switch_to_frame(iframe_page.frames_second_frame_element)
+    second_frame_text = iframe_page.frames_frame_text.get_text()
+    browser.switch_to_parent_frame()
+
+    assert first_frame_text == second_frame_text
+
+
+
+
+
+
+
+
+
+
 
 
 
