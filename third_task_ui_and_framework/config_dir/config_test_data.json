@@ -29,5 +29,15 @@
 
   "iframe_page_url": "https://demoqa.com/frames",
   "iframes_nested_frames_parent_frame_text": "Parent frame",
-  "iframes_nested_frames_child_frame_text": "Child Iframe"
+  "iframes_nested_frames_child_frame_text": "Child Iframe",
+
+  "dynamic_content_url": "https://the-internet.herokuapp.com/dynamic_content",
+
+  "infinity_scroll_page_url": "https://the-internet.herokuapp.com/infinite_scroll",
+  "scroll_script": "arguments[0].scrollIntoView({block: 'end', behavior: 'auto'});",
+  "employ_age": "23",
+
+  "upload_image_page_url": "https://the-internet.herokuapp.com/upload",
+  "upload_image_page_file_path": "image.jpg",
+  "upload_image_page_success_text": "File Uploaded!"
 }

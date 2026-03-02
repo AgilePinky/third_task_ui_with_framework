@@ -2,6 +2,7 @@ import time
 
 import pytest
 from faker import Faker
+import os
 
 from config_dir.config_reader import ConfigReader
 from pages_dir.login_page import LoginPage
@@ -13,6 +14,9 @@ from pages_dir.profile_page import ProfilePage
 from pages_dir.handlers_main_page import HandlersMainPage
 from pages_dir.handlers_new_page import HandlersNewPage
 from pages_dir.iframes_page import IframePage
+from pages_dir.dynamic_content_page import DynamicContentPage
+from pages_dir.infinity_scroll_page import InfinityScrollPage
+from pages_dir.upload_image_page import UploadImagePage
 
 
 # 1
@@ -292,7 +296,68 @@ def test_iframe(browser):
 
     assert first_frame_text == second_frame_text
 
+# 9
+def test_dynamic_content(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_dynamic_content_url())
+    dynamic_content_page = DynamicContentPage(browser)
+    dynamic_content_page.wait_for_open()
 
+    # 2
+    compare_results = dynamic_content_page.search_img_match(browser)
+    assert compare_results[0] == compare_results[1]
+
+# 10
+def test_infinity_scroll(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_infinity_scroll_page_url())
+    infinity_scroll_page = InfinityScrollPage(browser)
+    infinity_scroll_page.wait_for_open()
+
+    # 2
+    employ_age = config.get_employ_age()
+    assert int(employ_age) == infinity_scroll_page.scroll_n_times_in_container(employ_age, browser)
+
+# 11
+def test_upload_image(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_upload_image_page_url())
+    upload_image_page = UploadImagePage(browser)
+    upload_image_page.wait_for_open()
+
+    # 2
+    upload_image_page.input_file_element.send_keys(config.get_upload_image_page_file_path())
+    upload_image_page.input_file_submit_element.wait_for_clickable()
+    upload_image_page.input_file_submit_element.click()
+    upload_image_page.wait_for_open()
+
+    assert upload_image_page.unique_element.get_text() == \
+        config.get_upload_image_page_success_text()
+
+# 12
+def test_upload_image_dialog_window(browser):
+    # 1
+    print()
+    config = ConfigReader()
+    browser.get(config.get_upload_image_page_url())
+    upload_image_page = UploadImagePage(browser)
+    upload_image_page.wait_for_open()
+
+    # 2
+    upload_image_page.input_dialog_window_box.wait_for_clickable()
+    upload_image_page.input_dialog_window_box.click()
+
+    # 3
+    upload_image_page.upload_image_dialog_window(browser, config.get_upload_image_page_file_path())
+
+    assert upload_image_page.dialog_window_upload_success_marker_element.wait_for_visible()
+    
 
 
 

@@ -7,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
-# from elements_dir.base_element import BaseElement
 from logger_dir.logger import Logger
 
 class Browser:
@@ -120,9 +119,17 @@ class Browser:
         Logger.info(f"{self}: right click at {element}")
         ActionChains(self._driver).context_click(element).perform()
 
-    def get_title(self, browser):
-        Logger.info(f"{self}: page title = {browser.driver.title}")
-        return browser.driver.title
+    def get_title(self):
+        Logger.info(f"{self}: page title = {self._driver.title}")
+        return self._driver.title
+
+    def refresh_page(self):
+        Logger.info(f"{self}: page reloaded")
+        self._driver.refresh()
+
+    def find_elements(self, locator):
+        Logger.info(f"{self}: find element {locator}")
+        return self._driver.find_elements(*locator)
 
 
     def __str__(self) -> str:

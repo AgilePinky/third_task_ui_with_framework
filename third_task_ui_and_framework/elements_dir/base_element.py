@@ -38,7 +38,7 @@ class BaseElement:
 
     def _wait_for(self, EC) -> WebElement:
         try:
-            Logger.info(f"{self}: wait for {EC.__name__}")
+            #Logger.info(f"{self}: wait for {EC.__name__}")
             element = self._wait.until(method=EC(self.locator))
             return element
         except TimeoutException as err:
