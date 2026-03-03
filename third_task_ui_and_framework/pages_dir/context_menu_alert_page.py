@@ -6,7 +6,7 @@ from elements_dir.label import Label
 from pages_dir.base_page import BasePage
 
 class ContextMenuAlertPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     BOX_TO_RIGHT_CLICK_LOC = (By.ID, "hot-spot")
 
     def __init__(self, browser):

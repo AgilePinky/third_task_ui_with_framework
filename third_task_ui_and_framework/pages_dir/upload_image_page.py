@@ -11,12 +11,12 @@ from logger_dir.logger import Logger
 
 
 class UploadImagePage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     INPUT_FILE_LOC = (By.ID, "file-upload")
     INPUT_FILE_SUBMIT_LOC = (By.ID, "file-submit")
     INPUT_DIALOG_WINDOW_BOX_LOC = (By.ID, "drag-drop-upload")
     DIALOG_WINDOW_UPLOAD_SUCCESS_MARKER_LOC = \
-        (By.XPATH, "//div[@id='drag-drop-upload']//div[contains(@class, 'dz-success-mark')]//span")
+        (By.XPATH, "//*[@id='drag-drop-upload']//div[contains(@class, 'dz-success-mark')]//span")
 
     def __init__(self, browser):
         super().__init__(browser)

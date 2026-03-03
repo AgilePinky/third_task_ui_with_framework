@@ -9,7 +9,7 @@ from logger_dir.logger import Logger
 
 
 class InfinityScrollPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     PARAGRAPH_LOC = (By.XPATH, "//div[contains(@class, 'jscroll-added')]")
 
     def __init__(self, browser):

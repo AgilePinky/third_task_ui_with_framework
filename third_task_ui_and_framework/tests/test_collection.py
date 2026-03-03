@@ -1,10 +1,8 @@
-import time
-
 import pytest
 from faker import Faker
-import os
 
 from config_dir.config_reader import ConfigReader
+from logger_dir.logger import Logger
 from pages_dir.login_page import LoginPage
 from pages_dir.alert_page import AlertPage
 from pages_dir.context_menu_alert_page import ContextMenuAlertPage
@@ -22,7 +20,6 @@ from pages_dir.upload_image_page import UploadImagePage
 # 1
 def test_basic_authorization(browser):
     # 1
-    print()
     config = ConfigReader()
     username = config.get_basic_authorization_username()
     password = config.get_basic_authorization_password()
@@ -33,14 +30,19 @@ def test_basic_authorization(browser):
     # 2
     login_page = LoginPage(browser)
     login_page.wait_for_open()
-    assert login_page.unique_element.get_text() == config.get_basic_authorization_alert_expected
+
+    expected_result = config.get_basic_authorization_alert_expected()
+    actual_result = login_page.unique_element.get_text()
+    assert actual_result == expected_result,\
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 
 # 2
 def test_alert(browser):
     # 1
     config = ConfigReader()
-    browser.get(config.get_test_alert())
+    browser.get(config.get_test_alert_url())
 
     alert_page = AlertPage(browser)
     alert_page.wait_for_open()
@@ -48,29 +50,49 @@ def test_alert(browser):
     # 2
     alert_page.js_alert_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_alert_expected_text()
+
+    expected_result = config.get_alert_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
     browser.accept_alert()
 
     # 3
-    expected_text = config.get_alert_result_expected_text()
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_alert_result_expected_text()
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 4
     alert_page.js_confirm_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_confirm_expected_text()
+
+
+    expected_result = config.get_confirm_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
     browser.accept_alert()
 
     # 5
-    expected_text = config.get_confirm_result_expected_text()
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_confirm_result_expected_text()
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 6
     alert_page.js_prompt_button.click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_prompt_expected_text()
+
+    expected_result = config.get_prompt_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 7
     fake = Faker()
@@ -78,15 +100,16 @@ def test_alert(browser):
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
-    expected_text = config.get_prompt_result_expected_text() + random_text
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_prompt_result_expected_text() + random_text
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 
 # 3
 def test_alert_js(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_test_alert_url())
 
@@ -96,29 +119,48 @@ def test_alert_js(browser):
     # 2
     alert_page.js_alert_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_alert_expected_text()
+
+    expected_result = config.get_alert_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
     browser.accept_alert()
 
     # 3
-    expected_text = config.get_alert_result_expected_text()
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_alert_result_expected_text()
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 4
     alert_page.js_confirm_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_confirm_expected_text()
+
+    expected_result = config.get_confirm_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
     browser.accept_alert()
 
     # 5
-    expected_text = config.get_confirm_result_expected_text()
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_confirm_result_expected_text()
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 6
     alert_page.js_prompt_button.js_click()
     browser.wait_alert_present()
-    assert browser.get_alert_text() == config.get_prompt_expected_text()
+
+    expected_result = config.get_prompt_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 7
     fake = Faker()
@@ -126,15 +168,16 @@ def test_alert_js(browser):
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
-    expected_text = config.get_prompt_result_expected_text() + random_text
-    actual_text = alert_page.result_after_alert.get_text()
-    assert actual_text == expected_text
+    expected_result = config.get_prompt_result_expected_text() + random_text
+    actual_result = alert_page.result_after_alert.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 
 # 4
 def test_alert_context_click(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_test_alert_context_click_url())
     context_menu_alert_page = ContextMenuAlertPage(browser)
@@ -146,9 +189,11 @@ def test_alert_context_click(browser):
     browser.wait_alert_present()
     browser.get_alert_text()
 
-    expected_text = config.get_alert_context_click_expected_text()
-    actual_text = browser.get_alert_text()
-    assert actual_text == expected_text
+    expected_result = config.get_alert_context_click_expected_text()
+    actual_result = browser.get_alert_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 3
     browser.accept_alert()
@@ -157,7 +202,6 @@ def test_alert_context_click(browser):
 # 5
 def test_actions(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_actions_url())
     actions_page = ActionsPage(browser)
@@ -168,7 +212,11 @@ def test_actions(browser):
     random_position = fake.random_int(min=0, max=5) * 0.5
     slider_value = float(actions_page.move_slider_with_arrows(random_position))
 
-    assert random_position == slider_value
+    expected_result = random_position
+    actual_result = slider_value
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 
 # 6
@@ -178,7 +226,6 @@ def test_actions(browser):
                           ('3', 'name: user3')])
 def test_hovers(browser, profile_num, expected_profile_name):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_hovers_url())
     hover_page = HoverPage(browser)
@@ -189,7 +236,12 @@ def test_hovers(browser, profile_num, expected_profile_name):
 
 
     profile_name = hover_page.profile_name_element.get_text()
-    assert expected_profile_name == profile_name
+
+    expected_result = expected_profile_name
+    actual_result = profile_name
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 3
     hover_page.profile_url_element.click()
@@ -197,19 +249,27 @@ def test_hovers(browser, profile_num, expected_profile_name):
 
     profile_page = ProfilePage(browser)
     profile_page.wait_for_open()
-    assert current_url == config.get_profile_url().format(profile_num)
+
+    expected_result = config.get_profile_url().format(profile_num)
+    actual_result = current_url
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 4
     browser.driver.back()
     hover_page.wait_for_open()
     current_url = browser.driver.current_url
 
-    assert current_url == config.get_hovers_url()
+    expected_result = config.get_hovers_url()
+    actual_result = current_url
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 # 7
 def test_handlers(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_handlers_main_page_url())
     handlers_main_page = HandlersMainPage(browser)
@@ -225,32 +285,54 @@ def test_handlers(browser):
     handlers_new_page_first = HandlersNewPage(browser)
     handlers_new_page_first.wait_for_open()
 
-    assert handlers_new_page_first.unique_element.get_text() == config.get_handlers_new_page_header()
-    assert browser.get_title(browser) == config.get_handlers_new_page_header()
+    expected_result = config.get_handlers_new_page_header()
+    actual_result = handlers_new_page_first.unique_element.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
+
+    expected_result = config.get_handlers_new_page_header()
+    actual_result = browser.get_title()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 3
-    # browser.driver.switch_to.window(all_tabs[0])
     browser.switch_to_default_window()
 
-    assert handlers_main_page.unique_element.get_text() == config.get_handlers_main_page_header()
+    expected_result = config.get_handlers_main_page_header()
+    actual_result = handlers_main_page.unique_element.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 4
     handlers_main_page.new_tab_maker.click()
 
-    # all_tabs = browser.driver.window_handles
-    # browser.driver.switch_to.window(all_tabs[2])
     browser.switch_to_window(config.get_handlers_new_page_header())
     handlers_new_page_second = HandlersNewPage(browser)
     handlers_new_page_second.wait_for_open()
 
-    assert handlers_new_page_second.unique_element.get_text() == config.get_handlers_new_page_header()
-    assert browser.get_title(browser) == config.get_handlers_new_page_header()
+    expected_result = config.get_handlers_new_page_header()
+    actual_result = handlers_new_page_second.unique_element.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
+
+    expected_result = config.get_handlers_new_page_header()
+    actual_result = browser.get_title()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 5
-    # browser.driver.switch_to.window(all_tabs[0])
     browser.switch_to_default_window()
 
-    assert handlers_main_page.unique_element.get_text() == config.get_handlers_main_page_header()
+    expected_result = config.get_handlers_main_page_header()
+    actual_result = handlers_main_page.unique_element.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
     # 6
     browser.switch_to_window(config.get_handlers_new_page_header())
@@ -277,11 +359,15 @@ def test_iframe(browser):
 
     browser.switch_to_frame(iframe_page.nested_frames_parent_frame_element)
     assert (iframe_page.nested_frames_parent_frame_text.get_text() ==
-            config.get_iframes_nested_frames_parent_frame_text())
+            config.get_iframes_nested_frames_parent_frame_text()), \
+        Logger.error(f"Actual result = {config.get_iframes_nested_frames_child_frame_text()}"
+                     f"Expected result = {iframe_page.nested_frames_child_frame_text.get_text()}")
 
     browser.switch_to_frame(iframe_page.nested_frames_child_frame_element)
     assert (iframe_page.nested_frames_child_frame_text.get_text() ==
-            config.get_iframes_nested_frames_child_frame_text())
+            config.get_iframes_nested_frames_child_frame_text()), \
+        Logger.error(f"Actual result = {config.get_iframes_nested_frames_child_frame_text()}"
+                     f"Expected result = {iframe_page.nested_frames_child_frame_text.get_text()}")
     browser.switch_to_default_frame()
 
     # 3
@@ -299,7 +385,6 @@ def test_iframe(browser):
 # 9
 def test_dynamic_content(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_dynamic_content_url())
     dynamic_content_page = DynamicContentPage(browser)
@@ -307,12 +392,13 @@ def test_dynamic_content(browser):
 
     # 2
     compare_results = dynamic_content_page.search_img_match(browser)
-    assert compare_results[0] == compare_results[1]
+
+    assert compare_results[0] == compare_results[1], \
+        Logger.error(f"Images don't match")
 
 # 10
 def test_infinity_scroll(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_infinity_scroll_page_url())
     infinity_scroll_page = InfinityScrollPage(browser)
@@ -320,12 +406,16 @@ def test_infinity_scroll(browser):
 
     # 2
     employ_age = config.get_employ_age()
-    assert int(employ_age) == infinity_scroll_page.scroll_n_times_in_container(employ_age, browser)
+
+    expected_result = int(employ_age)
+    actual_result = infinity_scroll_page.scroll_n_times_in_container(employ_age, browser)
+    assert actual_result == expected_result,\
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 # 11
 def test_upload_image(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_upload_image_page_url())
     upload_image_page = UploadImagePage(browser)
@@ -337,13 +427,15 @@ def test_upload_image(browser):
     upload_image_page.input_file_submit_element.click()
     upload_image_page.wait_for_open()
 
-    assert upload_image_page.unique_element.get_text() == \
-        config.get_upload_image_page_success_text()
+    expected_result = config.get_upload_image_page_success_text()
+    actual_result = upload_image_page.unique_element.get_text()
+    assert actual_result == expected_result, \
+        Logger.error(f"Actual result = {actual_result}"
+                     f"Expected result = {expected_result}")
 
 # 12
 def test_upload_image_dialog_window(browser):
     # 1
-    print()
     config = ConfigReader()
     browser.get(config.get_upload_image_page_url())
     upload_image_page = UploadImagePage(browser)
@@ -356,16 +448,5 @@ def test_upload_image_dialog_window(browser):
     # 3
     upload_image_page.upload_image_dialog_window(browser, config.get_upload_image_page_file_path())
 
-    assert upload_image_page.dialog_window_upload_success_marker_element.wait_for_visible()
-    
-
-
-
-
-
-
-
-
-
-
-
+    assert upload_image_page.dialog_window_upload_success_marker_element.wait_for_visible(), \
+        Logger.error(f"Success marker isn't visible")

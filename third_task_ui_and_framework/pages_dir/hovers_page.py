@@ -6,7 +6,7 @@ from elements_dir.label import Label
 from elements_dir.button import Button
 
 class HoverPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     PROFILE_IMG_LOC_STR = "(//div[contains(@class, 'figure')]//img)[{}]"
     PROFILE_NAME_LOC_STR = "(//div[contains(@class, 'figure')]//div[contains(@class, 'figcaption')]//h5)[{}]"
     PROFILE_URL_LOC_STR = "(//div[contains(@class, 'figure')]//div[contains(@class, 'figcaption')]//a)[{}]"

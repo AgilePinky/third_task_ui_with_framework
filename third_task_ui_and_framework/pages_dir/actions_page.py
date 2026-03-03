@@ -8,7 +8,7 @@ from elements_dir.label import Label
 from elements_dir.input import Input
 
 class ActionsPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     HORIZONTAL_SLIDER_LOC = (By.XPATH, "//input[contains(@type,'range')]")
 
     def __init__(self, browser):

@@ -4,7 +4,7 @@ from pages_dir.base_page import BasePage
 from elements_dir.label import Label
 
 class  DynamicContentPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     FIRST_IMG_LOC = (By.XPATH, "(//div[contains(@class, 'large-2')]//img)[1]")
     SECOND_IMG_LOC = (By.XPATH, "(//div[contains(@class, 'large-2')]//img)[2]")
     THIRD_IMG_LOC = (By.XPATH, "(//div[contains(@class, 'large-2')]//img)[3]")

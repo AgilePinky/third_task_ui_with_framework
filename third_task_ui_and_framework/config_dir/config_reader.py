@@ -17,35 +17,35 @@ class ConfigReader:
         return self.config["basic_authorization_username"]
 
     def get_basic_authorization_password(self):
-        return self.config["asic_authorization_password"]
+        return self.config["basic_authorization_password"]
 
     def get_basic_authorization_url(self):
         return self.config["basic_authorization_url"]
+
+    def get_basic_authorization_alert_expected(self):
+        return self.config["basic_authorization_expected_alert"]
 
     # 2, 3
     def get_test_alert(self):
         return self.config["test_alert"]
 
-    def get_basic_authorization_alert_expected(self):
-        return self.config["basic_authorization_alert_expected"]
-
     def get_test_alert_url(self):
         return self.config["test_alert_url"]
 
     def get_alert_result_expected_text(self):
-        return self.config["alert_result_expected_text"]
+        return self.config["alert_expected_result_text"]
 
     def get_alert_expected_text(self):
         return self.config["alert_expected_text"]
 
     def get_confirm_result_expected_text(self):
-        return self.config["confirm_result_expected_text"]
+        return self.config["confirm_expected_result_text"]
 
     def get_confirm_expected_text(self):
         return self.config["confirm_expected_text"]
 
     def get_prompt_result_expected_text(self):
-        return self.config["prompt_result_expected_text"]
+        return self.config["prompt_expected_result_text"]
 
     def get_prompt_expected_text(self):
         return self.config["prompt_expected_text"]

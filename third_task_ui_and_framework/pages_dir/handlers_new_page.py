@@ -4,7 +4,7 @@ from pages_dir.base_page import BasePage
 from elements_dir.label import Label
 
 class HandlersNewPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[contains(@class, 'example')]//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[contains(@class, 'example')]//h3")
 
     def __init__(self, browser):
         super().__init__(browser)

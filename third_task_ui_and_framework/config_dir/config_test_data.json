@@ -4,7 +4,7 @@
   "basic_authorization_url": "the-internet.herokuapp.com/basic_auth",
 
 
-  "test_alert": "https://the-internet.herokuapp.com/javascript_alerts",
+  "test_alert_url": "https://the-internet.herokuapp.com/javascript_alerts",
   "alert_expected_text": "I am a JS Alert",
   "alert_expected_result_text": "You successfully clicked an alert",
   "confirm_expected_text": "I am a JS Confirm",

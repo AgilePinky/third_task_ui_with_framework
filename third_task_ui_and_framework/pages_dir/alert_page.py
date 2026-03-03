@@ -8,7 +8,7 @@ from elements_dir.button import Button
 
 
 class AlertPage(BasePage):
-    UNIQUE_ELEMENT_LOC = (By.XPATH, "//div[@id='content']//h3")
+    UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     JS_ALERT_BUTTON_LOC = (By.XPATH, "//button[contains(@onclick, 'jsAlert()')]")
     JS_CONFIRM_BUTTON_LOC = (By.XPATH, "//button[contains(@onclick, 'jsConfirm()')]")
     JS_PROMPT_BUTTON_LOC = (By.XPATH, "//button[contains(@onclick, 'jsPrompt()')]")
