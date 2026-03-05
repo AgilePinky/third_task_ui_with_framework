@@ -40,7 +40,14 @@ class HoverPage(BasePage):
                                         self.PROFILE_URL_LOC_STR.format(str(self.profile_num)),
                                         "Profile url {}".format(self.profile_num))
 
+    def get_profile_name(self):
+        return self.profile_name_element.get_text()
 
+    def click_profile_url(self):
+        self.profile_url_element.click()
+
+    def get_current_url(self):
+        return self.browser.driver.current_url
 
 
 

@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from pages_dir.base_page import BasePage
@@ -56,3 +58,41 @@ class IframePage(BasePage):
         self.frames_frame_text = Label(browser,
                                        self.FRAMES_TEXT_LOC,
                                       "IFrame text")
+
+    def click_alerts_frame_windows_button(self):
+        self.alerts_frame_windows_button.click()
+
+    def click_nested_frames_button(self):
+        self.nested_frames_button.click()
+
+    def switch_to_nested_frames_parent_frame(self):
+        self.browser.switch_to_frame(self.nested_frames_parent_frame_element)
+
+    def get_nested_frames_parent_frame_text(self):
+        self.nested_frames_parent_frame_text.wait_for_visible()
+        return self.nested_frames_parent_frame_text.get_text()
+
+    def switch_to_nested_frames_child_frame(self):
+        self.browser.switch_to_frame(self.nested_frames_child_frame_element)
+
+    def get_nested_frames_child_frame_text(self):
+        self.nested_frames_child_frame_text.wait_for_visible()
+        return self.nested_frames_child_frame_text.get_text()
+
+    def switch_to_default_frame(self):
+        self.browser.switch_to_default_frame()
+
+    def click_frames_button(self):
+        self.frames_button.click()
+
+    def switch_to_frames_first_frame(self):
+        self.browser.switch_to_frame(self.frames_first_frame_element)
+
+    def get_frames_frame_text(self):
+        return self.frames_frame_text.get_text()
+
+    def switch_to_parent_frame(self):
+        self.browser.switch_to_parent_frame()
+
+    def switch_frames_second_frame_element(self):
+        self.browser.switch_to_frame(self.frames_second_frame_element)

@@ -5,7 +5,7 @@ from elements_dir.label import Label
 
 from pages_dir.base_page import BasePage
 
-class ContextMenuAlertPage(BasePage):
+class AlertContextPage(BasePage):
     UNIQUE_ELEMENT_LOC = (By.XPATH, "//*[@id='content']//h3")
     BOX_TO_RIGHT_CLICK_LOC = (By.ID, "hot-spot")
 
@@ -17,3 +17,5 @@ class ContextMenuAlertPage(BasePage):
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
         self.box_to_right_click = Button(browser, self.BOX_TO_RIGHT_CLICK_LOC, "Right Click Box")
 
+    def right_click_on_box(self):
+        self.browser.right_click(self.box_to_right_click.wait_for_clickable())

@@ -1,43 +1,43 @@
 {
-  "basic_authorization_username": "admin",
-  "basic_authorization_password": "admin",
-  "basic_authorization_url": "the-internet.herokuapp.com/basic_auth",
+  "test_basic_authorization_username": "admin",
+  "test_basic_authorization_password": "admin",
+  "test_basic_authorization_url": "the-internet.herokuapp.com/basic_auth",
+  "test_basic_authorization_expected_result_text": "Congratulations! You must have the proper credentials.",
 
 
   "test_alert_url": "https://the-internet.herokuapp.com/javascript_alerts",
-  "alert_expected_text": "I am a JS Alert",
-  "alert_expected_result_text": "You successfully clicked an alert",
-  "confirm_expected_text": "I am a JS Confirm",
-  "confirm_expected_result_text": "You clicked: Ok",
-  "prompt_expected_text": "I am a JS prompt",
-  "prompt_expected_result_text": "You entered: ",
-  "basic_authorization_expected_alert": "Congratulations! You must have the proper credentials.",
+  "test_alert_expected_text": "I am a JS Alert",
+  "test_alert_expected_result_text": "You successfully clicked an alert",
+  "test_alert_confirm_expected_text": "I am a JS Confirm",
+  "test_alert_confirm_expected_result_text": "You clicked: Ok",
+  "test_alert_prompt_expected_text": "I am a JS prompt",
+  "test_alert_prompt_expected_result_text": "You entered: ",
 
   "test_alert_context_click_url": "https://the-internet.herokuapp.com/context_menu",
-  "alert_context_click_expected_text": "You selected a context menu",
+  "test_alert_context_click_expected_result_text": "You selected a context menu",
 
-  "actions_url": "https://the-internet.herokuapp.com/horizontal_slider",
+  "test_actions_url": "https://the-internet.herokuapp.com/horizontal_slider",
 
-  "hovers_url": "https://the-internet.herokuapp.com/hovers",
-  "profile_url": "https://the-internet.herokuapp.com/users/{}",
+  "test_hovers_url": "https://the-internet.herokuapp.com/hovers",
+  "test_hovers_profile_url": "https://the-internet.herokuapp.com/users/{}",
 
-  "handlers_main_page_url": "https://the-internet.herokuapp.com/windows",
-  "handlers_main_page_header": "Opening a new window",
-  "handlers_main_page_title": "The Internet",
-  "handlers_new_page_url": "https://the-internet.herokuapp.com/windows/new",
-  "handlers_new_page_header": "New Window",
+  "test_handlers_main_page_url": "https://the-internet.herokuapp.com/windows",
+  "test_handlers_main_page_header": "Opening a new window",
+  "test_handlers_main_page_title": "The Internet",
+  "test_handlers_new_page_url": "https://the-internet.herokuapp.com/windows/new",
+  "test_handlers_new_page_header": "New Window",
 
-  "iframe_page_url": "https://demoqa.com/frames",
-  "iframes_nested_frames_parent_frame_text": "Parent frame",
-  "iframes_nested_frames_child_frame_text": "Child Iframe",
+  "test_iframes_url": "https://demoqa.com/frames",
+  "test_iframes_nested_frames_parent_frame_text": "Parent frame",
+  "test_iframes_nested_frames_child_frame_text": "Child Iframe",
 
-  "dynamic_content_url": "https://the-internet.herokuapp.com/dynamic_content",
+  "test_dynamic_content_url": "https://the-internet.herokuapp.com/dynamic_content",
 
-  "infinity_scroll_page_url": "https://the-internet.herokuapp.com/infinite_scroll",
-  "scroll_script": "arguments[0].scrollIntoView({block: 'end', behavior: 'auto'});",
-  "employ_age": "23",
+  "test_infinity_scroll_url": "https://the-internet.herokuapp.com/infinite_scroll",
+  "test_infinity_scroll_scroll_script": "arguments[0].scrollIntoView({block: 'end', behavior: 'auto'});",
+  "test_infinity_scroll_employee_age": "5",
 
-  "upload_image_page_url": "https://the-internet.herokuapp.com/upload",
-  "upload_image_page_file_path": "image.jpg",
-  "upload_image_page_success_text": "File Uploaded!"
+  "test_upload_image_url": "https://the-internet.herokuapp.com/upload",
+  "test_upload_image_file_path": "image.jpg",
+  "test_upload_image_success_text": "File Uploaded!"
 }

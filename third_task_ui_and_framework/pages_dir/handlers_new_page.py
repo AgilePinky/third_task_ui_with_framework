@@ -11,4 +11,14 @@ class HandlersNewPage(BasePage):
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
 
+    def get_header_text(self):
+        return self.unique_element.get_text()
 
+    def get_title(self):
+        return self.browser.get_title()
+
+    def switch_to_default_tab(self):
+        self.browser.switch_to_default_window()
+
+    def close(self):
+        self.browser.close()

@@ -1,5 +1,3 @@
-import time
-
 from selenium.webdriver.common.by import By
 
 from config_dir.config_reader import ConfigReader
@@ -22,23 +20,21 @@ class InfinityScrollPage(BasePage):
 
     def scroll_n_times_in_container(self, n, browser):
         config = ConfigReader()
-        elements = self.paragraph_list.wait_for_visible()
 
+        elements = self.paragraph_list
+        print(1)
         while len(elements) < int(n):
+            current_len = len(elements)
             last_element = elements[-1]
-            if len(elements) >= int(n):
-                continue
+            if last_element.get_text() == 'Loading...':
+                Logger.info(f"if {last_element.get_text()} == 'Loading...'")
+                self.wait.until(lambda browser: last_element.get_text() != 'Loading...')
             else:
-                if last_element.text == 'Loading...':
-                    self.wait.until(lambda browser: last_element.text != 'Loading...')
-                else:
-                    Logger.info(f"{self}: Founded lust element. Text: {last_element.text[:30]}")
-                    browser.execute_script(config.get_scroll_script(), last_element)
+                Logger.info(f"{self}: Founded lust element. Text: {last_element.get_text()}")
+                browser.execute_script(config.get_config(f"test_infinity_scroll_scroll_script"), last_element.wait_for_visible())
 
-                    self.wait.until(lambda browser:
-                                    len(browser.find_elements(*self.PARAGRAPH_LOC)) > len(elements))
-
-                    elements = self.paragraph_list.wait_for_visible()
+                elements = self.paragraph_list
+                self.wait.until(lambda browser: len(elements) > current_len)
 
         Logger.info(f"Length of elements list {len(elements)}")
         return len(elements)

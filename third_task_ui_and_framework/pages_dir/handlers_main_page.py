@@ -13,3 +13,12 @@ class HandlersMainPage(BasePage):
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
         self.new_tab_maker = Button(browser, self.NEW_TAB_MAKER_LOC, "'Click Here'")
+
+    def click_new_tab(self):
+        self.new_tab_maker.click()
+
+    def get_header_text(self):
+        return self.unique_element.get_text()
+
+    def switch_to_tab(self, tab):
+        self.browser.switch_to_window(tab)

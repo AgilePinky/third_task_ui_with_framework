@@ -1,6 +1,6 @@
+from faker import Faker
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
 from logger_dir.logger import Logger
 from pages_dir.base_page import BasePage
 from elements_dir.label import Label
@@ -19,7 +19,60 @@ class AlertPage(BasePage):
 
         self.name = "Alert page"
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
-        self.js_alert_button = Button(browser, self.JS_ALERT_BUTTON_LOC, "Button JS Alert")
-        self.js_confirm_button = Button(browser, self.JS_CONFIRM_BUTTON_LOC, "Button JS Confirm")
-        self.js_prompt_button = Button(browser, self.JS_PROMPT_BUTTON_LOC, "Button JS Prompt")
+        self.alert_button = Button(browser, self.JS_ALERT_BUTTON_LOC, "Button JS Alert")
+        self.confirm_button = Button(browser, self.JS_CONFIRM_BUTTON_LOC, "Button JS Confirm")
+        self.prompt_button = Button(browser, self.JS_PROMPT_BUTTON_LOC, "Button JS Prompt")
         self.result_after_alert = Label(browser, self.RESULT_AFTER_ACTION_LOC, "Result")
+
+    def click_alert_button(self) -> None:
+        self.alert_button.wait_for_clickable()
+        Logger.info(f"{self.alert_button}: click")
+        try:
+            self.alert_button.click()
+        except WebDriverException as err:
+            Logger.error(f"{self.alert_button}: {err}")
+            raise
+
+    def click_confirm_button(self) -> None:
+        self.confirm_button.wait_for_clickable()
+        Logger.info(f"{self.confirm_button}: click")
+        try:
+            self.confirm_button.click()
+        except WebDriverException as err:
+            Logger.error(f"{self.confirm_button}: {err}")
+            raise
+
+    def click_prompt_button(self) -> None:
+        self.prompt_button.wait_for_clickable()
+        Logger.info(f"{self.prompt_button}: click")
+        try:
+            self.prompt_button.click()
+        except WebDriverException as err:
+            Logger.error(f"{self.prompt_button}: {err}")
+            raise
+
+    @staticmethod
+    def get_random_name():
+        fake = Faker()
+        return fake.name()
+
+    def js_click_alert_button(self) -> None:
+        element = self.alert_button.wait_for_presence()
+        Logger.info(f"{self}: js click")
+        self.browser.execute_script(
+            "arguments[0].click();", element)
+
+    def js_click_confirm_button(self) -> None:
+        element = self.confirm_button.wait_for_presence()
+        Logger.info(f"{self}: js click")
+        self.browser.execute_script(
+            "arguments[0].click();", element)
+
+    def js_click_prompt_button(self) -> None:
+        element = self.prompt_button.wait_for_presence()
+        Logger.info(f"{self}: js click")
+        self.browser.execute_script(
+            "arguments[0].click();", element)
+
+    def get_result_text(self):
+        return self.result_after_alert.get_text()

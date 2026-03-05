@@ -1,12 +1,11 @@
 from typing_extensions import Self
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
 
 from browser_dir.browser import Browser
 from elements_dir.web_element import WebElement
 from logger_dir.logger import Logger
 
-class MultiWebElement(WebElement):
+
+class MultiWebElement:
     DEFAULT_TIMEOUT = 10
 
     def __init__(
@@ -16,12 +15,11 @@ class MultiWebElement(WebElement):
             description: str = None,
             timeout: int = None
     ) -> None:
-        super().__init__(browser, formattable_xpath)
         self.index = 1
 
         self.browser = browser
         self.formattable_xpath = formattable_xpath
-        self.timeout = timeout if timeout \
+        self.timeout = timeout if timeout is not None \
             else self.DEFAULT_TIMEOUT
         self.description = description if description \
             else self.formattable_xpath.format("'i'")
@@ -36,7 +34,7 @@ class MultiWebElement(WebElement):
             self.formattable_xpath.format(self.index),
             f"{self.description}[{self.index}]",
             timeout=self.timeout
-            )
+        )
 
         if current_element.is_exist():
             self.index += 1
@@ -44,35 +42,53 @@ class MultiWebElement(WebElement):
         else:
             raise StopIteration
 
-    def _wait_for(self, EC) -> WebElement:
-        try:
-            Logger.info(f"{self}: wait for {EC.__name__}")
-            element = self._wait.until(method=EC(self.locator))
-            return element
-        except TimeoutException as err:
-            Logger.error(f"{self}: {err}")
-            raise
-
-    def _wait_for_not(self, EC) -> None:
-        try:
-            Logger.info(f"{self}: wait for not {EC.__name__}")
-            element = self._wait.until_not(method=EC(self.locator))
-            return element
-        except TimeoutException as err:
-            Logger.error(f"{self}: {err}")
-            raise
-
-    def wait_for_presence(self) -> WebElement:
-        return self._wait_for(EC=EC.presence_of_element_located)
-
-    def wait_for_clickable(self) -> WebElement:
-        return self._wait_for(EC=EC.element_to_be_clickable)
-
-    def wait_for_visible(self) -> WebElement:
-        return self._wait_for(EC=EC.visibility_of_element_located)
-
     def __str__(self) -> str:
         return f"{self.__class__.__name__}[{self.description}]"
 
     def __repr__(self) -> str:
         return str(self)
+
+    def __len__(self):
+        counter = 0
+        index = 1
+        while True:
+            current_element = WebElement(
+                self.browser,
+                self.formattable_xpath.format(index),
+                f"{self.description}[{index}]",
+                timeout=1)
+            if current_element.is_exist():
+                counter += 1
+                index += 1
+            else:
+                break
+        Logger.info(f"{self}: get len = {counter}")
+        return counter
+
+    def __getitem__(self, item):
+        if isinstance(item, int):
+            if item < 0:
+                actual_index = len(self) + item
+            else:
+                actual_index = item
+
+            xpath_index = actual_index + 1
+
+            current_element = WebElement(
+                self.browser,
+                self.formattable_xpath.format(xpath_index),
+                f"{self.description}[{xpath_index}]",
+                timeout=1)
+            return current_element
+
+        elif isinstance(item, slice):
+            start = item.start or 0
+            stop = item.stop or len(self)
+            step = item.step or 1
+
+            results = []
+            for i in range(start, stop, step):
+                results.append(self[i])
+            return results
+        else:
+            raise TypeError(f"Indexing by {type(item)} is not supported")
