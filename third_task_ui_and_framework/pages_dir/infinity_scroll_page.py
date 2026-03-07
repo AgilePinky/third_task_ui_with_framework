@@ -21,20 +21,22 @@ class InfinityScrollPage(BasePage):
     def scroll_n_times_in_container(self, n, browser):
         config = ConfigReader()
 
-        elements = self.paragraph_list
-        print(1)
+        elements = self.paragraph_list.get_all()
         while len(elements) < int(n):
             current_len = len(elements)
             last_element = elements[-1]
+
             if last_element.get_text() == 'Loading...':
                 Logger.info(f"if {last_element.get_text()} == 'Loading...'")
                 self.wait.until(lambda browser: last_element.get_text() != 'Loading...')
             else:
                 Logger.info(f"{self}: Founded lust element. Text: {last_element.get_text()}")
-                browser.execute_script(config.get_config(f"test_infinity_scroll_scroll_script"), last_element.wait_for_visible())
+                browser.execute_script("arguments[0].scrollIntoView({block: 'end', behavior: 'auto'});",
+                                       last_element.wait_for_visible())
 
-                elements = self.paragraph_list
-                self.wait.until(lambda browser: len(elements) > current_len)
+                old_count = len(elements)
+                self.wait.until(lambda browser: len(self.paragraph_list.get_all()) > old_count)
+                elements = self.paragraph_list.get_all()
 
         Logger.info(f"Length of elements list {len(elements)}")
         return len(elements)

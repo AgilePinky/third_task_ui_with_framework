@@ -31,21 +31,19 @@ class ActionsPage(BasePage):
         diff = target_value - current_value
         presses = int(diff / step)
 
-        if presses > 0:
-            key = Keys.ARROW_RIGHT
-        elif presses < 0:
-            key = Keys.ARROW_LEFT
-        else:
+        if presses == 0:
             return current_value
 
-        for i in range(abs(presses)):
-            slider.send_keys(key)
-            time.sleep(0.1)
+        key = Keys.ARROW_RIGHT if presses > 0 else Keys.ARROW_LEFT
+
+        slider.send_keys(key * abs(presses))
 
         Logger.info(f"{self}: set slider value {self.horizontal_slider.get_attribute('value')}")
         return float(slider.get_attribute('value'))
 
-    @staticmethod
-    def get_random_position():
+    def get_random_position(self):
         fake = Faker()
-        return fake.random_int(min=0, max=5) * 0.5
+        min_value = round(float(self.horizontal_slider.get_attribute('min')))
+        max_value = round(float(self.horizontal_slider.get_attribute('max')))
+        step_value = float(self.horizontal_slider.get_attribute('step'))
+        return fake.random_int(min=min_value, max=max_value) * step_value

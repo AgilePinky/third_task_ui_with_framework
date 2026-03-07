@@ -34,7 +34,6 @@
   "test_dynamic_content_url": "https://the-internet.herokuapp.com/dynamic_content",
 
   "test_infinity_scroll_url": "https://the-internet.herokuapp.com/infinite_scroll",
-  "test_infinity_scroll_scroll_script": "arguments[0].scrollIntoView({block: 'end', behavior: 'auto'});",
   "test_infinity_scroll_employee_age": "5",
 
   "test_upload_image_url": "https://the-internet.herokuapp.com/upload",

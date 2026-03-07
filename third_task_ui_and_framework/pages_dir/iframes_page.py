@@ -68,16 +68,24 @@ class IframePage(BasePage):
     def switch_to_nested_frames_parent_frame(self):
         self.browser.switch_to_frame(self.nested_frames_parent_frame_element)
 
+
     def get_nested_frames_parent_frame_text(self):
+        self.switch_to_nested_frames_parent_frame()
         self.nested_frames_parent_frame_text.wait_for_visible()
-        return self.nested_frames_parent_frame_text.get_text()
+        text = self.nested_frames_parent_frame_text.get_text()
+        self.switch_to_default_frame()
+        return text
 
     def switch_to_nested_frames_child_frame(self):
         self.browser.switch_to_frame(self.nested_frames_child_frame_element)
 
     def get_nested_frames_child_frame_text(self):
+        self.switch_to_nested_frames_parent_frame()
+        self.switch_to_nested_frames_child_frame()
         self.nested_frames_child_frame_text.wait_for_visible()
-        return self.nested_frames_child_frame_text.get_text()
+        text = self.nested_frames_child_frame_text.get_text()
+        self.switch_to_default_frame()
+        return text
 
     def switch_to_default_frame(self):
         self.browser.switch_to_default_frame()

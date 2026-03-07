@@ -16,40 +16,34 @@ class HoverPage(BasePage):
         self.profile_num = None
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
-        self.profile_img_element = None
-        self.profile_name_element = None
-        self.profile_url_element = None
 
 
     def hover_element(self, profile_num):
         self.profile_num = profile_num
-        self.profile_img_element = Button(self.browser,
+        profile_img_element = Button(self.browser,
                                         self.PROFILE_IMG_LOC_STR.format(self.profile_num),
                                         "Profile img {}".format(self.profile_num))
 
         ActionChains(self.browser.driver)\
-        .move_to_element(self.profile_img_element.wait_for_visible())\
+        .move_to_element(profile_img_element.wait_for_visible())\
         .perform()
 
-        self.profile_name_element = Label(self.browser,
+        profile_name_element = Label(self.browser,
                                         self.PROFILE_NAME_LOC_STR.format(str(self.profile_num)),
                                         "Profile name {}".format(self.profile_num))
-        self.profile_name_element.wait_for_visible()
-
-        self.profile_url_element = Button(self.browser,
-                                        self.PROFILE_URL_LOC_STR.format(str(self.profile_num)),
-                                        "Profile url {}".format(self.profile_num))
+        profile_name_element.wait_for_visible()
 
     def get_profile_name(self):
-        return self.profile_name_element.get_text()
+        profile_name_element = Label(self.browser,
+                                        self.PROFILE_NAME_LOC_STR.format(str(self.profile_num)),
+                                        "Profile name {}".format(self.profile_num))
+        return profile_name_element.get_text()
 
     def click_profile_url(self):
-        self.profile_url_element.click()
+        profile_url_element = Button(self.browser,
+                                     self.PROFILE_URL_LOC_STR.format(str(self.profile_num)),
+                                     "Profile url {}".format(self.profile_num))
+        profile_url_element.click()
 
     def get_current_url(self):
         return self.browser.driver.current_url
-
-
-
-
-

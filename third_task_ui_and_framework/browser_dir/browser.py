@@ -100,8 +100,9 @@ class Browser:
         self.switch_to_alert().accept()
 
     def send_keys_alert(self, text: str):
+        alert = self.switch_to_alert()
         Logger.info(f"{self}: send '{text}' to alert")
-        return self.switch_to_alert().send_keys(text)
+        return alert.send_keys(text)
 
     def switch_to_frame(self, frame):
         Logger.info(f"{self}: switch to frame")
@@ -126,10 +127,6 @@ class Browser:
     def refresh_page(self):
         Logger.info(f"{self}: page reloaded")
         self._driver.refresh()
-
-    def find_elements(self, locator):
-        Logger.info(f"{self}: find element {locator}")
-        return self._driver.find_elements(*locator)
 
 
     def __str__(self) -> str:

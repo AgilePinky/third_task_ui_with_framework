@@ -6,7 +6,7 @@ from logger_dir.logger import Logger
 
 
 class MultiWebElement:
-    DEFAULT_TIMEOUT = 10
+    DEFAULT_TIMEOUT = 1
 
     def __init__(
             self,
@@ -39,8 +39,8 @@ class MultiWebElement:
         if current_element.is_exist():
             self.index += 1
             return current_element
-        else:
-            raise StopIteration
+
+        raise StopIteration
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}[{self.description}]"
@@ -49,46 +49,21 @@ class MultiWebElement:
         return str(self)
 
     def __len__(self):
-        counter = 0
-        index = 1
-        while True:
-            current_element = WebElement(
-                self.browser,
-                self.formattable_xpath.format(index),
-                f"{self.description}[{index}]",
-                timeout=1)
-            if current_element.is_exist():
-                counter += 1
-                index += 1
-            else:
-                break
+        counter = sum(1 for _ in self)
         Logger.info(f"{self}: get len = {counter}")
         return counter
 
     def __getitem__(self, item):
-        if isinstance(item, int):
-            if item < 0:
-                actual_index = len(self) + item
-            else:
-                actual_index = item
+        if not isinstance(item, int):
+            raise TypeError(f"Type of item not int: {type(item)}")
 
-            xpath_index = actual_index + 1
+        xpath_index = item + 1
 
-            current_element = WebElement(
-                self.browser,
-                self.formattable_xpath.format(xpath_index),
-                f"{self.description}[{xpath_index}]",
-                timeout=1)
-            return current_element
+        return WebElement(
+            self.browser,
+            self.formattable_xpath.format(xpath_index),
+            f"{self.description}[{xpath_index}]",
+            timeout=1)
 
-        elif isinstance(item, slice):
-            start = item.start or 0
-            stop = item.stop or len(self)
-            step = item.step or 1
-
-            results = []
-            for i in range(start, stop, step):
-                results.append(self[i])
-            return results
-        else:
-            raise TypeError(f"Indexing by {type(item)} is not supported")
+    def get_all(self):
+        return [self[i] for i in range(len(self))]

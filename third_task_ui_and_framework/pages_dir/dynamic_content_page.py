@@ -32,4 +32,4 @@ class  DynamicContentPage(BasePage):
                 else:
                     browser.refresh_page()
         except:
-            raise AssertionError
+            raise AssertionError("Didn't catch match after 10 attempts")

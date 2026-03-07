@@ -27,34 +27,17 @@ class AlertPage(BasePage):
     def click_alert_button(self) -> None:
         self.alert_button.wait_for_clickable()
         Logger.info(f"{self.alert_button}: click")
-        try:
-            self.alert_button.click()
-        except WebDriverException as err:
-            Logger.error(f"{self.alert_button}: {err}")
-            raise
+        self.alert_button.click()
 
     def click_confirm_button(self) -> None:
         self.confirm_button.wait_for_clickable()
         Logger.info(f"{self.confirm_button}: click")
-        try:
-            self.confirm_button.click()
-        except WebDriverException as err:
-            Logger.error(f"{self.confirm_button}: {err}")
-            raise
+        self.confirm_button.click()
 
     def click_prompt_button(self) -> None:
         self.prompt_button.wait_for_clickable()
         Logger.info(f"{self.prompt_button}: click")
-        try:
-            self.prompt_button.click()
-        except WebDriverException as err:
-            Logger.error(f"{self.prompt_button}: {err}")
-            raise
-
-    @staticmethod
-    def get_random_name():
-        fake = Faker()
-        return fake.name()
+        self.prompt_button.click()
 
     def js_click_alert_button(self) -> None:
         element = self.alert_button.wait_for_presence()

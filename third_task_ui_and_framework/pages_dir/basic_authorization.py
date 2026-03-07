@@ -11,6 +11,8 @@ class BasicAuthorization(BasePage):
 
         self.unique_element = Label(self.browser, self.UNIQUE_ELEMENT_LOC,
                                     description="text 'Congratulations'")
+        self.congratulations = Label(self.browser, self.UNIQUE_ELEMENT_LOC,
+                                   description="text 'Congratulations'")
 
     def get_result_text(self):
-        return self.unique_element.get_text()
+        return self.congratulations.get_text()

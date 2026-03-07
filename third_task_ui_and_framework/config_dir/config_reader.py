@@ -16,3 +16,7 @@ class ConfigReader:
     def get_config(self, key):
         return self.config[key]
 
+    def get_upload_image_page_file_path(self):
+        parent_dir = Path(self.script_dir).parent
+        target_file = parent_dir / 'source' / self.config["test_upload_image_file_path"]
+        return str(target_file)

@@ -99,7 +99,8 @@ def test_alert(browser):
                      f"Expected result = {expected_result}")
 
     # 7
-    random_text = alert_page.get_random_name()
+    fake = Faker()
+    random_text = fake.name()
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
@@ -167,7 +168,8 @@ def test_alert_js(browser):
                      f"Expected result = {expected_result}")
 
     # 7
-    random_text = alert_page.get_random_name()
+    fake = Faker()
+    random_text = fake.name()
     browser.send_keys_alert(random_text)
     browser.accept_alert()
 
@@ -362,22 +364,17 @@ def test_iframes(browser):
     iframe_page.click_alerts_frame_windows_button()
     iframe_page.click_nested_frames_button()
 
-    iframe_page.switch_to_nested_frames_parent_frame()
-
     expected_result = config.get_config(f"{test_name}_nested_frames_parent_frame_text")
     actual_result = iframe_page.get_nested_frames_parent_frame_text()
     assert (actual_result == expected_result), \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
 
-    iframe_page.switch_to_nested_frames_child_frame()
-
     expected_result = config.get_config(f"{test_name}_nested_frames_child_frame_text")
     actual_result = iframe_page.get_nested_frames_child_frame_text()
     assert (actual_result == expected_result), \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
-    iframe_page.switch_to_default_frame()
 
     # 3
     iframe_page.click_frames_button()
@@ -439,7 +436,7 @@ def test_upload_image(browser):
     upload_image_page.wait_for_open()
 
     expected_result = config.get_config(f"{test_name}_success_text")
-    actual_result = upload_image_page.get_unique_element_text()
+    actual_result = upload_image_page.get_header_text()
     assert actual_result == expected_result, \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
@@ -459,7 +456,8 @@ def test_upload_image_dialog_window(browser):
     # 3
     pyautogui_util = PyAutoGuiUtils()
     pyautogui_util.upload_image_dialog_window(
-        upload_image_page.get_upload_image_page_file_path())
+        upload_image_page,
+        config.get_upload_image_page_file_path())
 
     assert upload_image_page.dialog_window_upload_success_marker_element.wait_for_visible(), \
         Logger.error(f"Success marker isn't visible")
