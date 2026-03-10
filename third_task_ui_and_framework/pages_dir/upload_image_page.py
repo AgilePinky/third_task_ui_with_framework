@@ -1,14 +1,10 @@
 from selenium.webdriver.common.by import By
-import pyautogui
-import time
-from pathlib import Path
 
-from config_dir.config_reader import ConfigReader
 from pages_dir.base_page import BasePage
 from elements_dir.label import Label
 from elements_dir.input import Input
 from elements_dir.button import Button
-from logger_dir.logger import Logger
+from utils.data_utils import DataUtils
 
 
 class UploadImagePage(BasePage):
@@ -34,19 +30,15 @@ class UploadImagePage(BasePage):
         self.header = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
 
 
-    def send_keys_input_file_element(self):
-        config = ConfigReader()
-        self.input_file_element.send_keys(
-            config.get_upload_image_page_file_path())
+    def send_keys_input_file_element(self, path):
+        self.input_file_element.send_keys(path)
 
 
     def click_input_file_submit_element(self):
-        self.input_file_submit_element.wait_for_clickable()
         self.input_file_submit_element.click()
 
     def get_header_text(self):
         return self.header.get_text()
 
     def click_input_dialog_window_box(self):
-        self.input_dialog_window_box.wait_for_clickable()
         self.input_dialog_window_box.click()

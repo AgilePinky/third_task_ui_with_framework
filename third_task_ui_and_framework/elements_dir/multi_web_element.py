@@ -6,7 +6,7 @@ from logger_dir.logger import Logger
 
 
 class MultiWebElement:
-    DEFAULT_TIMEOUT = 1
+    DEFAULT_TIMEOUT = 4
 
     def __init__(
             self,
@@ -29,14 +29,10 @@ class MultiWebElement:
         return self
 
     def __next__(self) -> WebElement:
-        current_element = WebElement(
-            self.browser,
-            self.formattable_xpath.format(self.index),
-            f"{self.description}[{self.index}]",
-            timeout=self.timeout
-        )
+        description = f"{self.description}[{self.index}]"
+        current_element = self._get_element(self.index, description)
 
-        if current_element.is_exist():
+        if current_element.is_exist(self.timeout if self.index == 1 else 0):
             self.index += 1
             return current_element
 
@@ -49,9 +45,10 @@ class MultiWebElement:
         return str(self)
 
     def __len__(self):
-        counter = sum(1 for _ in self)
-        Logger.info(f"{self}: get len = {counter}")
-        return counter
+        elements = self.get_all()
+        result = len(elements)
+        Logger.info(f"{self}: get len = {result}")
+        return result
 
     def __getitem__(self, item):
         if not isinstance(item, int):
@@ -59,11 +56,16 @@ class MultiWebElement:
 
         xpath_index = item + 1
 
-        return WebElement(
-            self.browser,
-            self.formattable_xpath.format(xpath_index),
-            f"{self.description}[{xpath_index}]",
-            timeout=1)
+        description = f"{self.description}[{xpath_index}]"
+        return self._get_element(xpath_index, description)
 
     def get_all(self):
-        return [self[i] for i in range(len(self))]
+        return [element for element in self]
+
+    def _get_element(self, index, description):
+        return WebElement(
+            self.browser,
+            self.formattable_xpath.format(index),
+            description,
+            timeout=self.timeout
+        )

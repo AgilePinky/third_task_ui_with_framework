@@ -25,37 +25,22 @@ class AlertPage(BasePage):
         self.result_after_alert = Label(browser, self.RESULT_AFTER_ACTION_LOC, "Result")
 
     def click_alert_button(self) -> None:
-        self.alert_button.wait_for_clickable()
-        Logger.info(f"{self.alert_button}: click")
         self.alert_button.click()
 
     def click_confirm_button(self) -> None:
-        self.confirm_button.wait_for_clickable()
-        Logger.info(f"{self.confirm_button}: click")
         self.confirm_button.click()
 
     def click_prompt_button(self) -> None:
-        self.prompt_button.wait_for_clickable()
-        Logger.info(f"{self.prompt_button}: click")
         self.prompt_button.click()
 
     def js_click_alert_button(self) -> None:
-        element = self.alert_button.wait_for_presence()
-        Logger.info(f"{self}: js click")
-        self.browser.execute_script(
-            "arguments[0].click();", element)
+        self.alert_button.js_click()
 
     def js_click_confirm_button(self) -> None:
-        element = self.confirm_button.wait_for_presence()
-        Logger.info(f"{self}: js click")
-        self.browser.execute_script(
-            "arguments[0].click();", element)
+        self.confirm_button.js_click()
 
     def js_click_prompt_button(self) -> None:
-        element = self.prompt_button.wait_for_presence()
-        Logger.info(f"{self}: js click")
-        self.browser.execute_script(
-            "arguments[0].click();", element)
+        self.prompt_button.js_click()
 
     def get_result_text(self):
         return self.result_after_alert.get_text()

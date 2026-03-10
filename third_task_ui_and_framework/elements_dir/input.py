@@ -24,7 +24,7 @@ class Input(BaseElement):
         if clear:
             self.clear()
 
-        element = self.wait_for_visible()
+        element = self.wait_for_presence()
         Logger.info(f"{self}: send_keys = '{keys}'")
         try:
             element.send_keys(keys)

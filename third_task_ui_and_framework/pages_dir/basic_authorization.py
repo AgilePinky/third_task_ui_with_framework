@@ -10,9 +10,9 @@ class BasicAuthorization(BasePage):
         self.page_name = "Basic Authorization page"
 
         self.unique_element = Label(self.browser, self.UNIQUE_ELEMENT_LOC,
-                                    description="text 'Congratulations'")
+                                    description="result text")
         self.congratulations = Label(self.browser, self.UNIQUE_ELEMENT_LOC,
-                                   description="text 'Congratulations'")
+                                   description="result text")
 
     def get_result_text(self):
         return self.congratulations.get_text()

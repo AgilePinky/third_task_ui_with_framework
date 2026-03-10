@@ -10,9 +10,10 @@ class HandlersNewPage(BasePage):
         super().__init__(browser)
 
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
+        self.header = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
 
     def get_header_text(self):
-        return self.unique_element.get_text()
+        return self.header.get_text()
 
     def get_title(self):
         return self.browser.get_title()
