@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 
-from config_dir.config_reader import ConfigReader
 from pages_dir.base_page import BasePage
 from elements_dir.label import Label
 from elements_dir.multi_web_element import MultiWebElement
@@ -17,13 +16,9 @@ class InfinityScrollPage(BasePage):
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Header")
         self.paragraph_list = MultiWebElement(browser, self.PARAGRAPH_LOC, "Paragraph list")
 
-
     def scroll_n_times_in_container(self, n, browser):
-        config = ConfigReader()
-
         elements = self.paragraph_list.get_all()
         while len(elements) < int(n):
-            current_len = len(elements)
             last_element = elements[-1]
 
             if last_element.get_text() == 'Loading...':

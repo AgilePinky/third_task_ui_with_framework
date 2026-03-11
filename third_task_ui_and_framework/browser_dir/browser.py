@@ -116,10 +116,6 @@ class Browser:
         Logger.info(f"{self}: switch to parent frame")
         return self.driver.switch_to.parent_frame()
 
-    def right_click(self, element):
-        Logger.info(f"{self}: right click at {element}")
-        ActionChains(self._driver).context_click(element).perform()
-
     def get_title(self):
         Logger.info(f"{self}: page title = {self._driver.title}")
         return self._driver.title

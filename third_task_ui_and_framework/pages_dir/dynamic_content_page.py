@@ -17,8 +17,8 @@ class DynamicContentPage(BasePage):
     def get_img_element(xpath, index):
         return xpath.format(index)
 
-    def search_img_match(self, browser):
-        img_list = [Label(browser,
+    def search_img_match(self):
+        img_list = [Label(self.browser,
                           self.get_img_element(self.FIRST_IMG_XPATH, i + 1),
                           f"Img {i + 1}") for i in range(3)]
 
@@ -30,6 +30,6 @@ class DynamicContentPage(BasePage):
             if len(set(src_list)) < len(src_list):
                 return [len(set(src_list)), len(src_list)]
             else:
-                browser.refresh_page()
+                self.browser.refresh_page()
 
         raise AssertionError("Didn't catch match after 10 attempts")

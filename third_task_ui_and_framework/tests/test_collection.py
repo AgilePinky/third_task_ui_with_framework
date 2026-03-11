@@ -37,7 +37,7 @@ def test_basic_authorization(browser):
 
     expected_result = config.get_config(f"{test_name}_expected_result_text")
     actual_result = basic_authorization_page.get_result_text()
-    assert actual_result == expected_result,\
+    assert actual_result == expected_result, \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
 
@@ -73,7 +73,6 @@ def test_alert(browser):
     # 4
     alert_page.click_confirm_button()
     browser.wait_alert_present()
-
 
     expected_result = config.get_config(f"{test_name}_confirm_expected_text")
     actual_result = browser.get_alert_text()
@@ -241,7 +240,6 @@ def test_hovers(browser, profile_num, expected_profile_name):
     # 2
     hover_page.hover_element(profile_num)
 
-
     profile_name = hover_page.get_profile_name(profile_num)
 
     expected_result = expected_profile_name
@@ -274,6 +272,7 @@ def test_hovers(browser, profile_num, expected_profile_name):
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
 
+
 # 7
 def test_handlers(browser):
     # 1
@@ -300,13 +299,13 @@ def test_handlers(browser):
                      f"Expected result = {expected_result}")
 
     expected_result = config.get_config(f"{test_name}_new_page_header")
-    actual_result = handlers_new_page_first.get_title()
+    actual_result = browser.get_title()
     assert actual_result == expected_result, \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
 
     # 3
-    handlers_new_page_first.switch_to_default_tab()
+    browser.switch_to_default_window()
 
     expected_result = config.get_config(f"{test_name}_main_page_header")
     actual_result = handlers_main_page.get_header_text()
@@ -334,7 +333,7 @@ def test_handlers(browser):
                      f"Expected result = {expected_result}")
 
     # 5
-    handlers_new_page_second.switch_to_default_tab()
+    browser.switch_to_default_window()
 
     expected_result = config.get_config(f"{test_name}_main_page_header")
     actual_result = handlers_main_page.get_header_text()
@@ -344,11 +343,12 @@ def test_handlers(browser):
 
     # 6
     handlers_main_page.switch_to_tab(config.get_config(f"{test_name}_new_page_header"))
-    handlers_new_page_second.close()
+    browser.close()
 
     # 7
     handlers_main_page.switch_to_tab(config.get_config(f"{test_name}_new_page_header"))
-    handlers_new_page_second.close()
+    browser.close()
+
 
 # 8
 def test_iframes(browser):
@@ -389,6 +389,7 @@ def test_iframes(browser):
 
     assert first_frame_text == second_frame_text
 
+
 # 9
 def test_dynamic_content(browser):
     # 1
@@ -399,10 +400,11 @@ def test_dynamic_content(browser):
     dynamic_content_page.wait_for_open()
 
     # 2
-    compare_results = dynamic_content_page.search_img_match(browser)
+    compare_results = dynamic_content_page.search_img_match()
 
     assert compare_results[0] < compare_results[1], \
         Logger.error(f"Images don't match")
+
 
 # 10
 def test_infinity_scroll(request, browser):
@@ -418,9 +420,10 @@ def test_infinity_scroll(request, browser):
 
     expected_result = int(employee_age)
     actual_result = infinity_scroll_page.scroll_n_times_in_container(employee_age, browser)
-    assert actual_result == expected_result,\
+    assert actual_result == expected_result, \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
+
 
 # 11
 def test_upload_image(browser):
@@ -443,6 +446,7 @@ def test_upload_image(browser):
     assert actual_result == expected_result, \
         Logger.error(f"Actual result = {actual_result}"
                      f"Expected result = {expected_result}")
+
 
 # 12
 def test_upload_image_dialog_window(browser):

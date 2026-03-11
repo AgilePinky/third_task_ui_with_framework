@@ -14,12 +14,3 @@ class HandlersNewPage(BasePage):
 
     def get_header_text(self):
         return self.header.get_text()
-
-    def get_title(self):
-        return self.browser.get_title()
-
-    def switch_to_default_tab(self):
-        self.browser.switch_to_default_window()
-
-    def close(self):
-        self.browser.close()

@@ -36,7 +36,7 @@ class Input(BaseElement):
         if clear:
             self.js_clear()
 
-        element = self.wait_for_visible()
+        element = self.wait_for_presence()
         Logger.info(f"{self}: send_keys = '{keys}'")
         self.browser.execute_script("arguments[0].value = ''", element, keys)
 

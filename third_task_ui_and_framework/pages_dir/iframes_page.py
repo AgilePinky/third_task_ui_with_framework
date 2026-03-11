@@ -11,7 +11,7 @@ from elements_dir.web_element import WebElement
 class IframePage(BasePage):
     UNIQUE_ELEMENT_LOC = (By.XPATH, "//header//img")
     ALERTS_FRAME_WINDOWS_LOC = (
-    By.XPATH, "(//div[contains(@class, 'element-group')])[3]//span[contains(@class,'group-header')]")
+        By.XPATH, "(//div[contains(@class, 'element-group')])[3]//span[contains(@class,'group-header')]")
     NESTED_FRAMES_LOC = (By.XPATH, "(//div[contains(@class, 'element-group')])[3]//*[contains(@id,'item-3')]//span")
     NESTED_FRAMES_PARENT_FRAME_LOC = (By.ID, "frame1")
     NESTED_FRAMES_PARENT_FRAME_TEXT_LOC = (By.XPATH, "//body")
