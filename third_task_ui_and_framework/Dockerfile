@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "/app/tests/test_collection.py"]
+CMD ["python", "/app/third_task_ui_and_framework/tests/test_collection.py"]
