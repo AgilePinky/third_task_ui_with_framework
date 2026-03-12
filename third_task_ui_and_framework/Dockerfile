@@ -4,10 +4,12 @@ RUN apt-get update && apt-get install -y git
 
 WORKDIR /app
 
-RUN git clone https://github.com/metalmekid/docker_test_task.git .
+RUN git clone -b develop https://github.com/AgilePinky/third_task_ui_with_framework.git .
 
-RUN pip install -r requirements.txt
+WORKDIR /app/third_task_ui_and_framework
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "tests/test_collection.py"]
+CMD ["python", "/app/tests/test_collection.py"]
